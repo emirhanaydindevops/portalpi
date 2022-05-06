@@ -2,19 +2,14 @@ pipeline {
     agent any
 
     
-    
-    stage("Git Clone"){
-        echo 'git bağlantısı yapılıyor'
-        git credentialsId: 'GIT_CREDENTIALS', url: 'https://github.com/emirhanaydindevops/portalpi.git' 
-        echo 'git bağlantısı yapıldı'
-    }
-
-    
+}
     
     stages {
-        stage('Hello') {
+        stage('Git Clone') {
             steps {
-                echo 'Hello World'
+              echo 'git bağlantısı yapılıyor'
+              git credentialsId: 'GIT_CREDENTIALS', url: 'https://github.com/emirhanaydindevops/portalpi.git' 
+              echo 'git bağlantısı yapıldı'
             }
         }
         stage('Buid') {
