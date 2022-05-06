@@ -1,4 +1,5 @@
 stage("Git Clone"){
 
-        git credentialsId: 'GIT_CREDENTIALS', url: 'https://github.com/emirhanaydindevops/portalpi'
+       echo 'hello'
+        //git credentialsId: 'GIT_CREDENTIALS', url: 'https://github.com/emirhanaydindevops/portalpi'
     }
