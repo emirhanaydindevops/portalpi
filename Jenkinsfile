@@ -1,4 +1,12 @@
-stage("Git Clone"){
+pipeline {
+    agent any
 
-        git credentialsId: 'GIT_HUB_CREDENTIALS', url: 'https://github.com/emirhanaydindevops/portalpi.git'
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World'
+                    git branch: 'main', credentialsId: 'GIT_HUB_CREDENTIALS', url: 'https://github.com/emirhanaydindevops/portalpi'
+            }
+        }
     }
+}
