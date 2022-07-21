@@ -11,30 +11,18 @@ pipeline {
           }
         }
     
-        stage("Commit Stage"){
-            steps{
-                script{
-                    def pom = readMavenPom file: 'pom.xml'
-                    
-                    def version=  "${pom.version}.${currentBuild.number}"
-                                   
-                    descriptor.version =version
-                    
-                    descriptor.transform()
-    
-                    rtMaven.tool = "Maven-3.3.9"
-                
-                    //rtMaven.resolver releaseRepo:'libs-release', snapshotRepo:'libs-snapshot', server: server
-                    
-                    buildInfo = rtMaven.run pom: 'pom.xml', goals: 'clean spring-boot:build-info install'
-                    
-                    server.publishBuildInfo buildInfo
-                
-                    env.version =  version
-                 
-                }
+       pipeline {
+    agent {
+        docker {
+            image 'maven:3.8.1-adoptopenjdk-11' 
+            args '-v /root/.m2:/root/.m2' 
+        }
+    }
+    stages {
+        stage('Build') { 
+            steps {
+                sh 'mvn -B -DskipTests clean package' 
             }
         }
     }
 }
-
