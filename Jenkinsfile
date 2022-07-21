@@ -10,6 +10,27 @@ pipeline {
             git branch: 'main', credentialsId: 'mygithub', url: 'https://github.com/emirhanaydindevops/portalpi.git'
           }
         }
+    stages {
+
+        stage('SonarQube Code Analysis') {
+
+            steps {
+
+                withSonarQubeEnv('sonarqube') {
+
+                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=test -Dsonar.projectName=test -Dsonar.projectVersion=1.0"
+
+                }
+
+            }
+
+        }
+
+    }
+
+}  
+        
+       
         stage("Commit Stage"){
             steps{
                 script{
