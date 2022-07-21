@@ -7,8 +7,7 @@ pipeline {
     stages {
         stage('Checkout Source') {
           steps {
-            echo 'Pulling... ' + scm.branches[0].name
-            git branch: scm.branches[0].name, credentialsId: 'jenkins-git', url: 'bitbucket.org:canesisdeployment/kargomatik_api.git'
+            git branch: 'main', credentialsId: 'mygithub', url: 'https://github.com/emirhanaydindevops/portalpi.git'
           }
         }
         stage("Commit Stage"){
