@@ -8,7 +8,7 @@ pipeline {
         stage('Checkout Source') {
           steps {
             git branch: 'main', credentialsId: 'mygithub', url: 'https://github.com/emirhanaydindevops/portalpi.git'
-            sh 'mvn -B -DskipTests clean package' 
+            sh 'mvn clean -U compile install -DskipTests' 
           }
         }
     }
