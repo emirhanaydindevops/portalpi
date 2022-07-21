@@ -23,8 +23,6 @@ pipeline {
     
                     rtMaven.tool = "Maven-3.3.9"
                 
-                    // Set Artifactory repositories for dependencies resolution and artifacts deployment.
-                    rtMaven.deployer releaseRepo:'m2-dev', server: server
                     //rtMaven.resolver releaseRepo:'libs-release', snapshotRepo:'libs-snapshot', server: server
                     
                     buildInfo = rtMaven.run pom: 'pom.xml', goals: 'clean spring-boot:build-info install'
