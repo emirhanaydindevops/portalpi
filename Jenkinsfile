@@ -3,7 +3,7 @@ node {
     git branch: 'main', credentialsId: 'github', url: 'https://github.com/emirhanaydindevops/portalpi'
   }
   stage('SonarQube analysis') {
-    def scannerHome = tool 'sonarqube';
+    def scannerHome = tool 'SonarQubeScanner-4.7';
     withSonarQubeEnv('sonarqube') {
       sh "${scannerHome}/bin/sonar-scanner \
       -D sonar.login=admin \
