@@ -5,7 +5,7 @@ pipeline {
         stage('Hello') {
             steps {
                 echo 'Hello World'
-                    git branch: 'main', credentialsId: 'GIT_HUB_CREDENTIALS', url: 'https://github.com/emirhanaydindevops/portalpi'
+                    git branch: 'main', credentialsId: 'github', url: 'https://github.com/emirhanaydindevops/portalpi'
             }
         }
     }
