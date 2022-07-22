@@ -1,15 +1,18 @@
 pipeline {
-    agent any
-    tools{
-        jdk 'java11'
-    }
 
-    stages {
-        stage('Checkout Source') {
-          steps {
-            git branch: 'main', credentialsId: 'mygithub', url: 'https://github.com/emirhanaydindevops/portalpi.git'
-            sh 'mvn clean -U compile install -DskipTests' 
-          }
+  environment {
+	def scannerHome = tool 'SonarQubeScanner-4.7'
+  }
+
+  agent any
+
+  stages {
+        stage('SonarQube Code Analysis') {
+            steps {
+                withSonarQubeEnv('sonarqube') {
+                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=emor -Dsonar.projectName=emor -Dsonar.projectVersion=1.0"
+                }
+            }
         }
     }
 }
