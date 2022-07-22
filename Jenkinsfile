@@ -1,8 +1,3 @@
-properties([
-        disableConcurrentBuilds(),
-        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '2')),
-])
-
 node('linux') {
     stage('Prepare') {
         deleteDir()
