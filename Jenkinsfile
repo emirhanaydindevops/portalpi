@@ -1,18 +1,25 @@
-pipeline {
+properties([
+        disableConcurrentBuilds(),
+        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '2')),
+])
 
-  environment {
-	def scannerHome = tool 'SonarQubeScanner-4.7'
-  }
+node('linux') {
+    stage('Prepare') {
+        deleteDir()
+        checkout scm
+    }
 
-  agent any
-
-  stages {
-        stage('SonarQube Code Analysis') {
-            steps {
-                withSonarQubeEnv('sonarqube') {
-                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=emor -Dsonar.projectName=emor -Dsonar.projectVersion=1.0"
-                }
-            }
+    stage('Generate') {
+        withEnv([
+                "PATH+MVN=${tool 'Maven-3.3.9'}/bin",
+                "JAVA_HOME=${tool 'jdk11'}",
+                "PATH+JAVA=${tool 'jdk11'}/bin"
+        ]) {
+            sh 'mvn clean -U compile install -DskipTests'
         }
+    }
+
+    stage('Archive Test Report') {
+        archive 'target/surefire-reports/*-output.txt'
     }
 }
